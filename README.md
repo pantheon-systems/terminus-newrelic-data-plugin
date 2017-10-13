@@ -43,12 +43,11 @@ terminus newrelic-data:org [ORG UUID] --overview
 For help installing, see [Manage Plugins](https://pantheon.io/docs/terminus/plugins/)
 ```
 mkdir -p ~/.terminus/plugins
-composer create-project -d ~/.terminus/plugins fusionx1/terminus-get-newrelic:dev-master
+composer create-project -d ~/.terminus/plugins pantheon-systems/terminus-newrelic-data-plugin:dev-master
 ```
 ## Things to remember
 1. If invoking New Relic-data:org make sure you are an administrator of the organisation, otherwise it will only display sites where you are member. 
 
 ## Todo
 1. To include screenshot of New relic metrics 
-2. To add actual PHP Usage
-3. To add Browsers time and apdex
+
