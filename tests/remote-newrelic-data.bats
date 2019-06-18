@@ -7,7 +7,7 @@
 #
 
 @test "get a sample newrelic data metrics" {
-  run terminus newrelic-data:site additude.dev
+  run terminus newrelic-data:site sitename.dev
   [ "$status" -eq 0 ]
   [[ "$output" == *"Response Time"* ]]
   [[ "$output" == *"Throughput"* ]]
