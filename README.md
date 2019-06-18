@@ -44,6 +44,10 @@ For help installing, see [Manage Plugins](https://pantheon.io/docs/terminus/plug
 ```
 mkdir -p ~/.terminus/plugins
 composer create-project -d ~/.terminus/plugins pantheon-systems/terminus-newrelic-data-plugin:dev-master
+
+Alternative installation:
+curl https://github.com/pantheon-systems/terminus-newrelic-data-plugin/archive/2.0.3.tar.gz -L | tar -C ~/.terminus/plugins -xvz
+composer update
 ```
 ## Things to remember
 1. If invoking New Relic-data:org make sure you are an administrator of the organisation, otherwise it will only display sites where you are member. 
