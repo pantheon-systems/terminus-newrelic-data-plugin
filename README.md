@@ -42,6 +42,7 @@ terminus newrelic-data:org [ORG UUID] --overview
 ## Installation
 For help installing, see [Manage Plugins](https://pantheon.io/docs/terminus/plugins/)
 ```
+Using composer:
 mkdir -p ~/.terminus/plugins
 composer create-project -d ~/.terminus/plugins pantheon-systems/terminus-newrelic-data-plugin:dev-master
 
