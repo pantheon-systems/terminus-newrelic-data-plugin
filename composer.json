@@ -10,7 +10,7 @@
             "compatible-version": "^2"
         }
     },
-    "require-dev": {
+    "require": {
         "league/climate": "^3.2"
     }, 
     "scripts": {
