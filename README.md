@@ -19,25 +19,25 @@ Learn more about Terminus and Terminus Plugins at:
 ```
 terminus newrelic-data:site my_site.dev
 ```
-[![Screenshot](http://dev-wpmanila.pantheonsite.io/wp-content/uploads/nr-site1.png)](https://github.com/pantheon-systems/terminus)
+![Fetches metric data from dev](https://user-images.githubusercontent.com/1759794/200643729-44b3ca55-70da-428c-adda-231deac79037.png)
 
 2. Displays all sites without New Relic under an organization by site plan.
 ```
 terminus newrelic-data:org [ORG UUID]
 ```
-[![Screenshot](http://dev-wpmanila.pantheonsite.io/wp-content/uploads/nr-org3.png)](https://github.com/pantheon-systems/terminus)
+![Displays all sites without New Relic under an organization by site plan](https://user-images.githubusercontent.com/1759794/200643828-4b991886-9c46-416d-a101-8204b36306df.png)
 
 3. Displays all sites with or without New Relic under an organization by site plan.
 ```
 terminus newrelic-data:org [ORG UUID] --all
 ```
-[![Screenshot](http://dev-wpmanila.pantheonsite.io/wp-content/uploads/nr-org1.png)](https://github.com/pantheon-systems/terminus)
+![Displays all sites with or without New Relic under an organization by site plan](https://user-images.githubusercontent.com/1759794/200643934-f9100414-fd35-4678-b86a-b500d7bb0296.png)
 
-4. Displays all sites with slowest response time  under an organization. It provides an indicator if a site is in normal or in critical condition based on the New Relic health status.
+4. Displays all sites with slowest response time under an organization. It provides an indicator if a site is in normal or in critical condition based on the New Relic health status.
 ```
 terminus newrelic-data:org [ORG UUID] --overview
 ```
-[![Screenshot](http://dev-wpmanila.pantheonsite.io/wp-content/uploads/nr-org2.png)](https://github.com/pantheon-systems/terminus)
+![Displays all sites with slowest response time under an organization](https://user-images.githubusercontent.com/1759794/200643992-bc77ea96-acf1-44d1-9fab-d2dd1aa0f21d.png)
 
 ## Installation
 For help installing, see [Manage Plugins](https://pantheon.io/docs/terminus/plugins/)
