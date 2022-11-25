@@ -1,5 +1,5 @@
 {
-    "name": "fusionx1/terminus-get-newrelic",
+    "name": "pantheon-systems/terminus-get-newrelic",
     "description": "Terminus Plugin that fetches metric data from new relic api and display via console",
     "type": "terminus-plugin",
     "autoload": {
