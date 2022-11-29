@@ -1,5 +1,7 @@
 # Terminus Get New Relic Data
 
+[![Minimal Support](https://img.shields.io/badge/Pantheon-Minimal_Support-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#minimal-support)
+
 [![Terminus v2.x Compatible](https://img.shields.io/badge/terminus-v2.x-green.svg)](https://github.com/pantheon-systems/terminus)
 
 Terminus Plugin that fetches metric data from the New Relic api:
