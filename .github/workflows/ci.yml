@@ -1,6 +1,6 @@
 name: PHP Compatibility
 on:
-  push:
+  push
 
 jobs:
   phpcompatibility:
