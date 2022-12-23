@@ -13,6 +13,7 @@ use Pantheon\Terminus\Site\SiteAwareInterface;
 use Pantheon\Terminus\Site\SiteAwareTrait;
 use Symfony\Component\Filesystem\Filesystem;
 use League\CLImate\CLImate;
+use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 
 class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
 {
@@ -215,22 +216,31 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
      * Pull new-relic data per site
      *
      * @command newrelic-data:site
+     * @filter-output
+     *
+     * @field-labels
+     *     Name: Name
+     *     Appserver Response Time: Appserver Response Time
+     *     Appserver Throughput: Appserver Throughput
+     *     Error Rate: Error Rate
+     *     Apdex Target: Apdex Target
+     *     Browser Load Time: Browser Load Time
+     *     Avg Page Load Time: Avg Page Load Time
+     *     Number of Hosts: Number of Hosts
+     *     Number of Instance: Number of Instance
+     *     Health Status: Health Status
+     *
+     * @return RowsOfFields
      */
     public function site($site_env_id, $plan = null,
         $options = ['all' => false, 'overview' => false]
     ) {
-
-        $climate = new CLImate;
-        $progress = $climate->progress()->total(100);
-        $progress->advance();
-
         // Get env_id and site_id.
         list($site, $env) = $this->getSiteEnv($site_env_id);
         $env_id = $env->getName();
         $siteInfo = $site->serialize();
         $site_id = $siteInfo['id'];
         $newrelic = $env->getBindings()->getByType('newrelic');
-        $progress->current(50);
         $nr_data = array_pop($newrelic);
 
         if(!empty($nr_data)) {
@@ -238,8 +248,8 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
             $pop = $this->fetch_newrelic_data($api_key, $env_id);
             if(isset($pop)) {
                 $items[] = $pop;
-                $progress->current(100);
-                $climate->table($items);
+                $table = new RowsOfFields($items);
+                return $table;
             }
         }
 
