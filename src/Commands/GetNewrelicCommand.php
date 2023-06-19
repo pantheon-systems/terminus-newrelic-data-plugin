@@ -75,13 +75,13 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                 $this->sites->filterByOwner($owner);
             }
 
-            $sites = $this->sites->filter(function ($site) {return $site->get('service_level') != 'free';})->serialize();
+            $site_ids = $this->sites->filter(function ($site) {return $site->get('service_level') != 'free';})->ids();
 
-            if (empty($sites)) {
+            if (empty($site_ids)) {
                 $this->log()->notice('You have no sites.');
             }
 
-            $count = count($sites);
+            $count = count($site_ids);
             $str_format = "";
             $progress = $climate->progress()->total($count);
             $exclude_free = 'noplan';
@@ -89,14 +89,16 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                 $exclude_free = 'free';
             }
            
-            foreach ($sites as $site) 
+            foreach ($site_ids as $site_id)
             {
+                $site = $this->sites->get($site_id);
+                $serialized_site = $site->serialize();
                 $counter++;
-                if ($environments = $this->getSite($site['name'])->getEnvironments()->serialize()) {
+                if ($environments = $this->getSite($serialized_site['name'])->getEnvironments()->serialize()) {
                     foreach ($environments as $environment) 
                     {
                         if ($environment['id'] == 'dev' AND !$options['overview'] ) { 
-                            $site_env = $site['name'] . '.' . $environment['id'];
+                            $site_env = $serialized_site['name'] . '.' . $environment['id'];
                             list(, $env) = $this->getSiteEnv($site_env);
                             $env_id = $env->getName();
                             $newrelic = $env->getBindings()->getByType('newrelic');
@@ -109,16 +111,19 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                                 $appserver_data = array_pop($appserver);
                                 $dash_link = empty($appserver_data) ? "--" : $dash_path . $appserver_data->get('site');
 
-                                $service_level = $site['service_level'];
-                                $data = array( "Site" => $site['name'],
-                                    "Service level" => $site['service_level'],
-                                    "Framework"  => $site['framework'],
-                                    "Site created" => $site['created'],
+                                $service_level = $serialized_site['service_level'];
+                                if (!$service_level) {
+                                    $service_level = $site->get('service_level');
+                                }
+                                $data = array( "Site" => $serialized_site['name'],
+                                    "Service level" => $serialized_site['service_level'],
+                                    "Framework"  => $serialized_site['framework'],
+                                    "Site created" => $serialized_site['created'],
                                     "Newrelic" => $nr_status,
                                     "Dashboard URL" => $dash_link);
 
                                 if($nr_status == 'Disabled' && $service_level != "free") {
-                                    $str_format .= $site['name'] .",";
+                                    $str_format .= $serialized_site['name'] .",";
                                 }
 
                                     switch ($service_level) 
@@ -161,7 +166,7 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                         }
                                                                                         
                         if ($environment['id'] == 'live' AND $options['overview']) { 
-                            $site_env = $site['name'] . '.' . $environment['id'];
+                            $site_env = $serialized_site['name'] . '.' . $environment['id'];
                             list(, $env) = $this->getSiteEnv($site_env);
                             $env_id = $env->getName();
                             $newrelic = $env->getBindings()->getByType('newrelic');
