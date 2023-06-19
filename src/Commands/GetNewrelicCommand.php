@@ -38,6 +38,18 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
      * @command newrelic-data:org
      *
      * @option overview
+     *
+     * @filter-output
+     *
+     * @field-labels
+     *     Site: Site
+     *     Service Level: Service Level
+     *     Framework: Framework
+     *     Site Created: Site Created
+     *     Newrelic: Newrelic
+     *     Dashboard URL: Dashboard URL
+     *
+     * @return RowsOfFields
      */
     public function org($org_id, $plan = null, 
         $options = ['overview' => false, 
@@ -46,7 +58,6 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                 'exclude-free-plan' => false, 
                 'owner' => null]
     ) {
-        $climate = new CLImate;
         if(!empty($org_id)) {
             $pro = array();
             $basic = array();
@@ -83,11 +94,11 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
 
             $count = count($site_ids);
             $str_format = "";
-            $progress = $climate->progress()->total($count);
             $exclude_free = 'noplan';
             if($options['exclude-free-plan']) {
                 $exclude_free = 'free';
             }
+            $this->log()->notice('Fetching Newrelic data for {count} sites. This may take a while...', compact('count'));
            
             foreach ($site_ids as $site_id)
             {
@@ -184,35 +195,31 @@ class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface
                     }
                 
                 }
-                
-                $progress->current($counter);
+                $this->log()->notice("Fetched Newrelic data for {counter} out of {count} sites.", compact('counter', 'count'));
             }
 
-
             if (empty($items) AND !isset($items)) {
+                $this->log()->notice("Sites with No New Relic: " . substr($str_format, 0, -1));
 
                 $site_plans = array('free', 'basic', 'business', 'performance', 'elite');
+                $items = [];
                 
                 foreach($site_plans as $plan)
                 {
                     if (!empty($$plan)) {
-                        $climate->table($$plan); 
+                        $items = array_merge($items, $$plan);
                     }
                 }
-                
-
-                echo "Sites with No New Relic: " . substr($str_format, 0, -1);
-                echo "\n";
-
+                $table = new RowsOfFields($items);
             } else 
             {
                 $items = $this->multi_sort($items);
-                $climate->table($items);
+                $table = new RowsOfFields($items);
             }
             
             $de=date("h:i:sa");
-            echo  'Perf Audit Completed in: from '. $ds .' to ' . $de;
-
+            $this->log()->notice('Perf Audit Completed in: from '. $ds .' to ' . $de);
+            return $table;
         }
     }
 
