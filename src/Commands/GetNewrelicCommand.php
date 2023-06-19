@@ -12,7 +12,6 @@ use Pantheon\Terminus\Exceptions\TerminusException;
 use Pantheon\Terminus\Site\SiteAwareInterface;
 use Pantheon\Terminus\Site\SiteAwareTrait;
 use Symfony\Component\Filesystem\Filesystem;
-use League\CLImate\CLImate;
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 
 class GetNewrelicCommand extends TerminusCommand implements SiteAwareInterface

@@ -10,9 +10,6 @@
             "compatible-version": "^2"
         }
     },
-    "require": {
-        "league/climate": "^3.2"
-    }, 
     "scripts": {
         "install-bats": "if [ ! -f bin/bats ] ; then git clone https://github.com/sstephenson/bats.git; mkdir -p bin; bats/install.sh .; fi",
         "bats": "TERMINUS_PLUGINS_DIR=.. bin/bats tests",
