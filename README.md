@@ -1,6 +1,8 @@
 # Terminus Get New Relic Data
 
-[![Minimal Support](https://img.shields.io/badge/Pantheon-Minimal_Support-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#minimal-support)
+This plugin is no longer supported and has been archived.
+
+[![Unsupported](https://img.shields.io/badge/Pantheon-Unsupported-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#unsupported)
 
 [![Terminus v2.x Compatible](https://img.shields.io/badge/terminus-v2.x-green.svg)](https://github.com/pantheon-systems/terminus)
 
